@@ -31,6 +31,7 @@ var getPasswordSpecs = function () {
   // console.log(uppercaseChars);
   // console.log(specChars);
 
+  // User prompts to get desired password specification
   var lowerConfirm = confirm("Password Generator Specification 1 of 4:\nUse lowercase characters?");
   var upperConfirm = confirm("Password Generator Specification 2 of 4:\nUse uppercase characters?");
   var specConfirm = confirm("Password Generator Specification 3 of 4:\nUse special characters?");
@@ -49,47 +50,41 @@ var getPasswordSpecs = function () {
   } while (isNaN(pwLength) || pwLength > 128 || pwLength < 8);
 
 
-
+  // Start with empty array of valid characters and add the character sets the user specified to it
   var usedChars = [];
-
   if (lowerConfirm) {
     usedChars = usedChars.concat(lowercaseChars);
   }
-
   if (upperConfirm) {
     usedChars = usedChars.concat(uppercaseChars);
   }
-
   if (specConfirm) {
     usedChars = usedChars.concat(specChars);
   }
-
   if (numericConfirm) {
     usedChars = usedChars.concat(numericChars);
   }
 
+  // Return the password length and the valid characters to generate a password from
   return {pwLength, usedChars};
 
 }
 
-
-
-
+// Generates a password based on user defined criteria
 function generatePassword() {
 
   // Function return object unpacking
   // https://www.javascripttutorial.net/javascript-return-multiple-values/
   let {pwLength, usedChars} = getPasswordSpecs();
 
+  // Randomly add characters from the valid character set up to the defined password length
   var password = [];
-
   for (var i = 0; i<pwLength; i++) {
     password.push(usedChars[Math.floor(Math.random()*usedChars.length)]);
   }
 
-  console.log(password)
+  // Join the array of characters into a single string with no separators
   password = password.join("")
-  console.log(password)
 
   return password;
 }
